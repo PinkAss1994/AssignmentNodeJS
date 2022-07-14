@@ -1,18 +1,31 @@
 var express = require('express');
 var app = express();
+var path = require('path');
+var cookieSession = require('cookie-session');
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cookieSession({
+    name: "abc-session",
+    secret: "COOKIE_SECRET",
+    httpOnly: true
+  })
+);
 app.listen(3000);
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://xuantieu1:oJTpqqX0j4EpIeC7@cluster0.6wcnx.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true}, function(err){
+mongoose.connect('mongodb+srv://xuantieu1:X36gDxiO3Z9c0QPk@cluster0.6wcnx.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true}, function(err){
     if (err) {
         console.log("mongodb connect error: " + err);
     }else{
         console.log("mongodb connected successfully");
     }
 });
+const db = require("./models");
+const Role = db.role;
 
 app.get("/", function(req, res) {
     res.render("./client/home");
