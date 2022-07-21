@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
         required: false
     },
     images:{
-        type:[String],
+        type: [String],
         required: true
     },
     createAt:{
@@ -68,15 +68,27 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-const validateProduct = (product) => {
-    const schema = {
-        name: Joi.string().required(),
-        size: Joi.array().items(Joi.string()).required(),
-        color: Joi.string(),
-        images: Joi.array().items(Joi.string()).required(),
-    }
-    return Joi.validate(product, schema);
-}
+// const validateProduct = (product) => {
+//     const schema = {
+//         name: Joi.string().required(),
+//         size: Joi.array().items(Joi.string()).required(),
+//         color: Joi.string(),
+//         description: Joi.string(),
+//         details: Joi.string(),
+//         stock: Joi.number(),
+//         price: Joi.number(),
+//         size: Joi.array().items(Joi.string()).required(),
+//         images: Joi.array().items(Joi.string()),
+//         sale: Joi.number(),
+//         label: Joi.string(),
+//         selectCate: Joi.string()
+        
+
+
+
+//     }
+//     return Joi.validate(product, schema);
+// }
 
 module.exports.Product = Product;
-module.exports.valid = validateProduct;
+//module.exports.valid = validateProduct;

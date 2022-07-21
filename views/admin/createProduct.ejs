@@ -18,12 +18,24 @@
                   <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name">
                 </div>
                 <div class="mb-3">
+                  <label class="form-label" for="basic-default-fullname">Category</label>
+                  
+                    
+                 
+                  <select id="defaultSelect" class="form-select" name="selectCate">
+                    <% category.forEach(function(cat){ %>
+                    
+                    <option value="<%= cat._id %>"><%= cat.name %></option>
+                  <% }) %>
+                  </select>
+                </div>
+                <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">Description</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"></textarea>
                   </div>
                   <div class="mb-3">
-                    <label class="form-label" for="basic-default-fullname">Detail</label>
-                    <input type="text" class="form-control" id="detail" name="detail">
+                    <label class="form-label" for="basic-default-fullname">Details</label>
+                    <input type="text" class="form-control" id="details" name="details">
                   </div>
                   <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">Stock</label>
@@ -70,23 +82,9 @@
                   </div>
                   <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">images</label>
-                    <input type="file" class="form-control" id="images" name="images">
+                    <input class="form-control" type="file" id="file" name="file" multiple>
                   </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-default-company">Status</label>
-                  <!-- <input type="number" class="form-control" id="ordering" name="ordering" placeholder="Enter order"> -->
-                  <div class="col-md">
-                    <div class="form-check form-check-inline mt-3">
-                      <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="1">
-                      <label class="form-check-label" for="inlineRadio1">Active</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="2">
-                      <label class="form-check-label" for="inlineRadio2">Deactive</label>
-                    </div>
-                  </div>
-                
-                </div>
+
               
   
   

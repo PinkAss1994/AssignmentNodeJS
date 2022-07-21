@@ -18,13 +18,13 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model('Category', categorySchema);
 
-const validateCategory = (category) => {
-    const schema = {
-        name: Joi.string().min(2).max(20).required()
-    }
-    return Joi.validate(category, schema);
-}
+// const validateCategory = (category) => {
+//     const schema = {
+//         name: Joi.string().min(2).max(20).required()
+//     }
+//     return Joi.validate(category, schema);
+// }
 
 module.exports.Category = Category;
-module.exports.validate = validateCategory;
+// module.exports.validate = validateCategory;
 
