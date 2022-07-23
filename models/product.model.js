@@ -7,6 +7,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category_id:{
+        type: String
+    },
     description:{
         type: String,
         required: false,

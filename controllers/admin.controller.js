@@ -50,16 +50,7 @@ const getAllProduct = async(req, res, next) => {
 //Get Add Product View
 
 const getAddProductView = async(req, res, next) => {
-    // Category.find(function(err, items) {
-    //     if (err) {
-    //         console.error(" category list error" + err);
-    //         res.render("admin/home");
-
-    //     }else{
-    //         cats:items;
-    //         res.render('admin/createProduct');
-    //     }
-    // })
+   
     const model = {
         errors: null
       };
@@ -71,7 +62,41 @@ const getAddProductView = async(req, res, next) => {
       ).lean();
     res.render('admin/createProduct', model);
 }
+//Get Update Product View
 
+const getUpdateProductView = async(req, res, next) => {
+     try{
+        let model = {
+            errors: null
+          };
+        
+          model.category = await Category.find(
+            {
+              status:1
+            }
+          ).lean();
+        const id = req.params.id;
+          model.product = await Product.findById(id).exec();
+        
+          res.render('admin/updateProduct', model);
+    }catch(error){
+     res.status(400).send(error.message);
+    }
+// try{
+//     const id = req.params.id;
+//     const oneProduct = await Product.findById(id).exec();
+//     const categoryList = await Category.find({
+//         status:1
+//     });
+//     res.render('admin/updateProduct',{
+//         prod : oneProduct,
+//         cate: categoryList
+//     });
+
+// } catch(error){
+//     res.status(400).send(error.message);
+// }
+}
 //Create Product
 
 const createProduct = async (req, res, next) => {
@@ -82,6 +107,7 @@ const createProduct = async (req, res, next) => {
     const pro = req.body;
     var product = new Product({
         name: pro.name,
+        category_id: pro.selectCate,
         description: pro.description,
         details: pro.details,
         stock: pro.stock,
@@ -105,23 +131,156 @@ const createProduct = async (req, res, next) => {
         
       }
       console.log(product);
-    product.save(function (err){
-        if (err) {
-            res.json({kq:0, "err": err});
-        }else{
-            
-            //add category.product_id
-            Category.findOneAndUpdate({_id: pro.selectCate}, {$push: {product_id:product._id}}, function (err){
-                if (err) {
-                    res.json({kq:0, "err": err});
-                }else{
-                    res.redirect('/admin/list-products');
-                }
-            });
-        }
-       
-    });
+    product.save();
+    res.redirect('list-products');
     
+
+}
+
+//Update product
+
+const updateProduct = async (req, res, next) => {
+    let lstCategory = await Category.find(
+        {
+               status: 1
+             }
+           ).lean();
+    const data = req.body;
+
+    let dataBody = {
+        name:data.name,
+        category_id: data.selectCate,
+        description:data.description,
+        details:data.details,
+        stock:data.stock,
+        price:data.price,
+        size: data.size,
+        color: data.color,
+        label: data.label,
+        sale: data.sale,
+        ...(typeof(req.file)!=="undefined" && {
+            images: {
+              url: req.file.path,
+              filename: req.file.filename,
+            }
+          }),
+      };
+     
+       let category = lstCategory;
+      let newData = {
+        ...dataBody
+      }
+      console.log(newData);
+      const product = await Product.findByIdAndUpdate(
+        req.params.id,           
+        { $set: newData },
+        { new: true }
+      );
+      try{
+      console.log(product, "abcaaaaaaaaaa");
+      res.redirect('/admin/list-products')
+     // await producto.save()
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Hubo un Error");
+    }
+    // const lstCategory = await Category.find(
+    //     {
+    //       status: 1
+    //     }
+    //   ).lean();
+    
+    //   const docProduct = await Product.findOne(
+    //     {
+    //       id: req.params.id
+    //     }
+    //   ).lean();
+    
+    //   if (!docProduct || !docProduct.id) {
+    //     return res.render('admin/updateProduct', {
+    //       errors: [
+    //         {
+    //           msg: 'Ivalid Id'
+    //         }
+    //       ],
+    //       category: lstCategory
+    //     });
+    //   }
+    
+    //   const errors = req.validationErrors();
+    
+    //   if (errors) {
+    //     return res.render('admin/updateProduct', {
+    //       errors,
+    //       category: lstCategory,
+    //       product: docProduct
+    //     });
+    //   }
+
+    //   const updateData = {
+    //     name: req.body.name,
+    //     category_id: req.body.categoryId,
+    //     description: req.body.description,
+    //     price: req.body.price,
+    //     sale: req.body.sale,
+    //     size: req.body.size,
+    //     details:req.body.details,
+    //     stock: req.body.stock,
+    //     label: req.body.label,
+    //     color: req.body.color,
+    //     images: []
+    //   };
+    
+    //   if (!req.file || !req.file.filename) {
+    //     updateData.images = docProduct.images;
+    //   }
+    //   else {
+    //     updateData.images = req.file.filename;
+    //   } 
+      
+    //   await Product.update(
+    //     {
+    //       id: docProduct.id
+    //     },
+    //     updateData
+    //   );
+    //   res.redirect('/admin/list-products');
+// const id = req.params.id;
+// const data = req.body;
+// const lstCategory = await Category.find(
+//         {
+//           status: 1
+//        }
+//      ).lean();
+//      category = lstCategory;
+// var product = Product.findOneAndUpdate(id,{
+// name:data.name,
+// category_id: data.selectCate,
+// description:data.description,
+// details:data.details,
+// stock:data.stock,
+// price:data.price,
+// size: data.size,
+// color: data.color,
+// label: data.label,
+// sale: data.sale,
+// ...(typeof(req.file)!=="undefined" && {
+//     images: {
+//       url: req.file.path,
+//       filename: req.file.filename,
+//     }
+//   }),
+// }, {new:true});
+
+// if(!req.file || !req.file.filename){
+//     data.images = product.images;
+// }
+// else{
+//     data.images = req.file.filename;
+// }
+// if(!product) return res.status(404).send('product with the given id not found');
+// res.redirect('/admin/list-products');
+// console.log(product);
 
 }
 module.exports = {
@@ -131,5 +290,7 @@ module.exports = {
     createCate,
     createProduct,
     getAddProductView,
-    getAllProduct
+    getAllProduct,
+    getUpdateProductView,
+    updateProduct
 }

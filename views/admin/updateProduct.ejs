@@ -1,0 +1,136 @@
+<h4 class="fw-bold py-3 mb-4">
+               
+    <!-- <span class="text-muted fw-light">Account Settings / </span> Connections -->
+  </h4>
+  <!-- Layout Demo -->
+  <!-- <div class="layout-demo-wrapper">
+    <div class="layout-demo-placeholder"> -->
+      <div class="row">
+        <div class="col-xl">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Update productuct</h5>
+            </div>
+            <div class="card-body">
+              <form action="" enctype="multipart/form-data" method="POST">
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-fullname">Name</label>
+                  <input type="text" class="form-control" id="name" name="name" value="<%= product.name%>">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-fullname">Category</label>
+                  
+                    
+                 
+                  <select id="defaultSelect" class="form-select" name="selectCate">
+                    <% category.forEach(function(item){ %>
+                        <option value="<%= item.id%>"
+                            <%=(item.id==product.category_id)
+                            ? 'selected=\"selected\"' : '' %> ><%=
+                                item.name%>
+                        </option>
+                        <%})%>
+                  </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Description</label>
+                    <input class="form-control" id="exampleFormControlTextarea1" name="description" rows="3" value="<%= product.description%>"></input>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Details</label>
+                    <input type="text" class="form-control" id="details" name="details" value="<%= product.details%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Stock</label>
+                    <input type="text" class="form-control" id="stock" name="stock" value="<%= product.stock%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Price</label>
+                    <input type="text" class="form-control" id="price" name="price" value="<%= product.price%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">size</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="size" value="37" id="defaultCheck3" checked="">
+                      <label class="form-check-label" for="defaultCheck3"> 37 </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="size" value="39" id="defaultCheck3" checked="">
+                      <label class="form-check-label" for="defaultCheck3"> 39 </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="size" value="41" id="defaultCheck3" checked="">
+                      <label class="form-check-label" for="defaultCheck3"> 41 </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="size" value="42" id="defaultCheck3" checked="">
+                      <label class="form-check-label" for="defaultCheck3"> 42 </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="size"value="43" id="defaultCheck3" checked="">
+                      <label class="form-check-label" for="defaultCheck3"> 43 </label>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Color</label>
+                    <input type="text" class="form-control" id="color" name="color" value="<%= product.color%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">Label</label>
+                    <input type="text" class="form-control" id="label" name="label" value="<%= product.label%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">sale</label>
+                    <input type="text" class="form-control" id="sale" name="sale" value="<%= product.sale%>">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-default-fullname">images</label>
+                    <% for(var i=0; i < product.images.length; i++) { %>
+                        <img src="upload/<%= product.images[i]%>" width="200px">
+                        <% } %>
+                    <input class="form-control" type="file" id="file" name="file" multiple>
+                  </div>
+                  <div class = mb-3>
+                    <div class = preview-images></div>
+
+                  </div>
+
+              
+  
+  
+  
+                <!-- <div class="mb-3">
+                  <input type="hidden" class="form-control" id="active" name="active" value="1">
+                </div> -->
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+            let imagesPreview = function(input, placeToInsertImagePreview) {
+                if (input.files) {
+                    let filesAmount = input.files.length;
+                    console.log(input.files)
+                    for (i = 0; i < filesAmount; i++) {
+                        let reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML("<img>")).attr("src", event.target.result).appendTo(placeToInsertImagePreview);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $("#file").on("change", function() {
+                imagesPreview(this, "div.preview-images");
+            });
+        });
+    </script>
+    <style>
+        div.preview-images>img {
+            width: 30%;
+        }
+    </style>
