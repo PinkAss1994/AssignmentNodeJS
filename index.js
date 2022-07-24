@@ -17,7 +17,7 @@ require('./startup/logging')();
 require('./startup/validations')();
 
 app.use(expressLayouts);
-app.set('layout','layouts/client');
+app.set('layout','layouts/client', 'layouts/products-page');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(cors());
