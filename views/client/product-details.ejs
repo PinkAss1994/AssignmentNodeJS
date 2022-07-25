@@ -5,9 +5,9 @@
 				<div class="col-first">
 					<h1>Product Details Page</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-						<a href="single-product.html">product-details</a>
+						<a href="#">product-details</a>
 					</nav>
 				</div>
 			</div>
@@ -21,24 +21,28 @@
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
+						<% prod.images.forEach(function(image) { %>
 						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="upload/ <%=prod.image %>" alt="">
 						</div>
-						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-						</div>
-						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-						</div>
+						<% }); %>
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-						<h3>Faded SkyBlu Denim Jeans</h3>
-						<h2>$149.99</h2>
+						<h3><%= prod.name %></h3>
+						<% if (prod.sale ==0) { %>
+						<h2>$ <%= prod.price %></h2>
+						<% } else { %>
+							<h2>$ <%= prod.price - (prod.sale * prod.price) / 100 %></h2>
+							<%} %>
 						<ul class="list">
-							<li><a class="active" href="#"><span>Category</span> : Household</a></li>
+							<li><a class="active" href="#"><span>Category</span> : <%= prod.label %></a></li>
+							<% if (prod.stock ==0) { %>
 							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+							<% } else { %>
+								<li><a href="#"><span>Availibility</span style ="color: red"> : Out Stock</a></li>
+								<% } %>
 						</ul>
 						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
 							something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
@@ -85,6 +89,10 @@
 			</ul>
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<% if (prod.description != null) { %>
+					<p> <%= prod.description %> </p>
+					<%} else { %>
+
 					<p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes
 						and sizes enjoying themselves .Born between the two world wars, Beryl Cook eventually left Kendrick School in
 						Reading at the age of 15, where she went to secretarial school and then into an insurance office. After moving to
@@ -100,6 +108,7 @@
 						the death of spouses or grown children leaving for college are all reasons that someone accustomed to cooking for
 						more than one would suddenly need to learn how to adjust all the cooking practices utilized before into a
 						streamlined plan of cooking that is more efficient for one person creating less</p>
+						<% } %>
 				</div>
 				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 					<div class="table-responsive">
@@ -180,7 +189,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+											<img src="../../client/img/product/review-1.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -195,7 +204,7 @@
 								<div class="review_item reply">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
+											<img src="../../client/img/product/review-2.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -210,7 +219,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
+											<img src="../../client/img/product/review-3.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -289,7 +298,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+											<img src="../../client/img/product/review-1.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -307,7 +316,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
+											<img src="../../client/img/product/review-2.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -325,7 +334,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
+											<img src="../../client/img/product/review-3.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>

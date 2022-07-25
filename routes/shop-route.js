@@ -1,14 +1,15 @@
 const express = require('express');
-const{getHomePage, getProductsPage} =require('../controllers/shop-controller');
 const router = express.Router();
+const ShopController =require('../controllers/shop-controller');
+
 
 router.use((req, res, next) => {
     req.app.set('layout', 'layouts/client');
     next();
 });
+router.get('', ShopController.getHomePage);
+router.get('/product/:id', ShopController.getProductDetails);
 
-router.get('', getHomePage);
-router.get('/products', getProductsPage);
 
 
 module.exports = {

@@ -61,6 +61,11 @@ const productSchema = new mongoose.Schema({
         required: false,
         default: 0
     },
+    buyCount:{
+        type: Number,
+        required: false,
+        default: 0
+    },
     status:{
         type: Number,
         default: 1
