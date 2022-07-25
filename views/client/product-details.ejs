@@ -21,11 +21,13 @@
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
-						<% prod.images.forEach(function(image) { %>
+						<% for(var i = 0; i < prod.images.length; i++) {%>
+
+						
 						<div class="single-prd-item">
-							<img class="img-fluid" src="upload/ <%=prod.image %>" alt="">
+							<img class="img-fluid" src="/upload/<%=prod.images[i] %>" alt="">
 						</div>
-						<% }); %>
+						<% } %>
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
@@ -38,15 +40,19 @@
 							<%} %>
 						<ul class="list">
 							<li><a class="active" href="#"><span>Category</span> : <%= prod.label %></a></li>
-							<% if (prod.stock ==0) { %>
+							<% if (prod.stock != 0) { %>
 							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
 							<% } else { %>
 								<li><a href="#"><span>Availibility</span style ="color: red"> : Out Stock</a></li>
 								<% } %>
 						</ul>
+						<% if (prod.details ==null) { %>
 						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
 							something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
 							during the winter.</p>
+							<% } else { %>
+								<p><%= prod.details %></p>
+								<% } %>
 						<!-- <div class="product_count">
 							<label for="qty">Quantity:</label>
 							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
@@ -396,3 +402,50 @@
 		</div>
 	</section>
 	<!--================End Product Description Area =================-->
+	<section class="related-product-area section_gap_bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>Related Products</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="row">
+						<% relatedProducts.forEach(function(prod) { %>
+							<% salePrice = prod.price - (prod.sale * prod.price) / 100 %>
+							<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+								<div class="single-related-product d-flex">
+									<a href="/product/<%= prod.id %>"><img src="/upload/<%=prod.images[0] %>" alt="<%=prod.name %>" style="width: 70px; height: 70px"></a>
+									<div class="desc">
+										<a href="/product/<%= prod.id %>" class="title"><%= prod.name %></a>
+										<div class="price">
+											<% if(prod.sale ==0) { %>
+												<h6>$ <%= prod.price %></h6>
+													<% } else { %>
+													<h6>$ <%= salePrice %></h6>
+												<h6 class="l-through">$ <%= prod.price %></h6>
+												<% } %>
+										</div>
+									</div>
+								</div>
+							</div>
+						<%})%>
+						
+						
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="ctg-right">
+						<a href="#" target="_blank">
+							<img class="img-fluid d-block mx-auto" src="../../client/img/category/c5.jpg" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>

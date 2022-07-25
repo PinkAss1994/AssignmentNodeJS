@@ -34,10 +34,6 @@ const productSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    productType:{
-        main: String,
-        sub: String
-    },
     color:{
         type: String,
         required: false

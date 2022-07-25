@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const{Category} = require('../models/category.model');
 const{Product} = require('../models/product.model');
 const {Cart} = require('../models/cart');
@@ -65,15 +66,17 @@ exports.getHomePage = (req, res, next) => {
     //   cartProduct = cart.generateArray();
     // }
     
+    var sale = {sale: -1};
+    _id: new mongoose.Types.ObjectId();
     const id = req.params.id;
     Product.findById(id).then(product => {
-      Product.find({ "category_id": product.category_id }).then(
+      Product.find({ "category_id": product.category_id }).limit(9).sort(sale).then(
         relatedProducts => {
           res.render("client/product-details", {
             prod: product,
             relatedProducts: relatedProducts
           });
-          product.save();
+          console.log(product);
         }
       );
     });

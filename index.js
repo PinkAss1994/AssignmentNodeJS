@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const multer = require('multer');
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const config = require('./startup/config');
 const winston = require('winston');
