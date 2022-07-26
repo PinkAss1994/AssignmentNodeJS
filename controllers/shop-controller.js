@@ -5,9 +5,9 @@ const {Cart} = require('../models/cart');
 
 var ITEM_PER_PAGE = 12;
 var SORT_ITEM;
-var sort_value = "Giá thấp tới cao";
-var ptype;
-var ptypesub;
+var sort_value = "sorting";
+// var ptype;
+// var ptypesub;
 var pprice = 999999;
 var psize;
 var plabel;
@@ -84,6 +84,98 @@ exports.getHomePage = (req, res, next) => {
 
 //Get Products list page
 
-// const getProductsPage = async (req, res) => {
-//     res.render('client/products', {layout: 'layouts/products-page'});
-// }
+
+exports.getProducts = (req, res, next) => {
+  let productType = req.params.productType;
+  let productChild = req.params.productChild;
+
+  // ptype = req.query.type !== undefined ? req.query.type : ptype;
+  // ptypesub = req.query.type !== undefined ? req.query.type : ptypesub;
+  pprice = req.query.price !== undefined ? req.query.price : 999999;
+  psize = req.query.size !== undefined ? req.query.size : psize;
+  plabel = req.query.label !== undefined ? req.query.label : plabel;
+  plowerprice = pprice !== 999999 ? pprice - 50 : 0;
+  plowerprice = pprice == 1000000 ? 200 : plowerprice;
+  SORT_ITEM = req.query.orderby;
+
+  if (SORT_ITEM == -1) {
+    sort_value = "price increase";
+    price = "-1";
+  }
+  if (SORT_ITEM == 1) {
+    sort_value = "price derease";
+    price = "1";
+  }
+
+  if (Object.entries(req.query).length == 0) {
+    psize = "";
+    plabel = "";
+  }
+
+  var page = +req.query.page || 1;
+  let totalItems;
+  let catName = [];
+  Category.find({}, (err, cats) => {
+    cats.forEach(cat => {
+      catName.push(cat.name);
+    });
+  });
+
+
+  if (productType == undefined) {
+    productType = "";
+  } else {
+    Category.findOne({ name: `${productType}` }, (err) => {
+      if (err) console.log(err);
+     
+    });
+  }
+  if (productChild == undefined) {
+    productChild = "";
+  }
+  Product.find({
+    category_id: new RegExp(productChild, "i"),
+    size: new RegExp(psize, "i"),
+    price: { $gt: plowerprice, $lt: pprice },
+    label: new RegExp(plabel, "i")
+  })
+    .countDocuments()
+    .then(numProduct => {
+      totalItems = numProduct;
+      return Product.find({
+        category_id: new RegExp(productChild, "i"),
+        size: new RegExp(psize, "i"),
+        price: { $gt: plowerprice, $lt: pprice },
+        label: new RegExp(plabel, "i")
+      })
+        .skip((page - 1) * ITEM_PER_PAGE)
+        .limit(ITEM_PER_PAGE)
+        .sort({
+          price
+        });
+    })
+    .then(products => {
+      res.render("client/products", {
+        title: "Products List",
+
+        allProducts: products,
+        currentPage: page,
+        currentChild: productChild,
+        categories: catName,
+        currentCat: productType,
+        
+        // categoriesChild: childType,
+        hasNextPage: ITEM_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEM_PER_PAGE),
+        ITEM_PER_PAGE: ITEM_PER_PAGE,
+        sort_value: sort_value,
+        
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};

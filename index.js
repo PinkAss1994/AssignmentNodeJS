@@ -36,7 +36,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(adminRoutes.routes);
 app.use(clientRoutes.routes);
-// error handler
+
+// app.use(
+//     session({
+//       secret: 'notsecret',
+//       saveUninitialized: true,
+//       resave: false,
+//       store: new MongoDBStore({ uri: process.env.DB, collection: 'sessions' }),
+//       cookie: { maxAge: 180 * 60 * 1000 }
+//     })
+//   );
+//error handler
 // app.use(function(err, req, res, next) {
 //     var cartProduct;
 //     if (!req.session.cart) {
