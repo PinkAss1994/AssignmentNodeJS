@@ -27,42 +27,41 @@ app.use(cors());
 app.use(bodyParser.json());
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use((req, res, next) => {
-//     var cart = new Cart(req.session.cart ? req.session.cart : {});
-//     req.session.cart = cart;
-//     res.locals.session = req.session;
-//     next();
-//   });
-
-app.use(adminRoutes.routes);
-app.use(clientRoutes.routes);
-
-// app.use(
-//     session({
-//       secret: 'notsecret',
-//       saveUninitialized: true,
-//       resave: false,
-//       store: new MongoDBStore({ uri: process.env.DB, collection: 'sessions' }),
-//       cookie: { maxAge: 180 * 60 * 1000 }
-//     })
-//   );
-//error handler
-// app.use(function(err, req, res, next) {
-//     var cartProduct;
-//     if (!req.session.cart) {
-//       cartProduct = null;
-//     } else {
-//       var cart = new Cart(req.session.cart);
-//       cartProduct = cart.generateArray();
-//     }
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(
+    session({
+      secret: 'notsecret',
+      saveUninitialized: true,
+      resave: false,
+      store: new MongoDBStore({ uri: process.env.DB, collection: 'sessions' }),
+      cookie: { maxAge: 180 * 60 * 1000 }
+    })
+  );
+app.use((req, res, next) => {
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    req.session.cart = cart;
+    res.locals.session = req.session;
+    next();
+  });
+  app.use(adminRoutes.routes);
+  app.use(clientRoutes.routes);
   
-//     // render the error page
-//     res.status(err.status || 500);
-//     res.render('error', { cartProduct: cartProduct });
-//   });
+
+app.use(function(err, req, res, next) {
+    var cartProduct;
+    if (!req.session.cart) {
+      cartProduct = null;
+    } else {
+      var cart = new Cart(req.session.cart);
+      cartProduct = cart.generateArray();
+    }
+    
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+  
+    res.status(err.status || 500);
+    res.render('error', { cartProduct: cartProduct });
+  });
 app.use(err);
 
 app.listen(config.port, () => winston.info('App is listening on url http://localhost:'+ config.port));

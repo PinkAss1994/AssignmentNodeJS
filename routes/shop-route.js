@@ -13,6 +13,11 @@ router.get('/products/:productType?/:productChild?', ShopController.getProducts)
 router.post('/products/:productType*?', ShopController.postNumItems);
 router.get("/search", ShopController.getSearch);
 
+router.get("/shopping-cart", ShopController.getCart);
+router.get("/add-to-cart/:productId", ShopController.addToCart);
+router.get("/modify-cart", ShopController.modifyCart);
+router.get("/delete-cart", ShopController.getDeleteCart);
+router.get("/delete-item/:productId", ShopController.getDeleteItem);
 
 
 
