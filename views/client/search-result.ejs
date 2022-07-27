@@ -1,0 +1,79 @@
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shop Category page</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Fashion Category</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">          
+        </div>
+           
+            <!-- End Filter Bar -->
+            <!-- Start Best Seller -->
+            <div></div>
+            <section class="lattest-product-area pb-40 category-list">
+                <div style="text-align:center">
+                    <h1 class="tt-title"><%= title %></h1>
+                    </div>
+                <div class="row">
+                   
+                    <% searchProducts.forEach(function(prod) { %>
+                        <% salePrice = prod.price - (prod.sale * prod.price) / 100 %>
+                    <!-- single product -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <img class="img-fluid" src="/upload/<%=prod.images[0] %>" alt="<%= prod.name %>" style="width: 255px; height: 271px;">
+                            <div class="product-details">
+                                <h6><%= prod.name %></h6>
+                                <div class="price">
+                                    <% if(prod.sale ==0) { %>
+                                        <h6>$ <%= prod.price %></h6>
+                                            <% } else { %>
+                                            <h6>$ <%= salePrice %></h6>
+                                        <h6 class="l-through">$ <%= prod.price %></h6>
+                                        <% } %>
+                                </div>
+                                <div class="prd-bottom">
+
+                                    <a href="" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to cart</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-sync"></span>
+                                        <p class="hover-text">compare</p>
+                                    </a>
+                                    <a href="/product/<%= prod.id %>" class="social-info">
+                                        <span class="lnr lnr-move"></span>
+                                        <p class="hover-text">view more</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </section>
+            <!-- End Best Seller -->
+            <!-- Start Filter Bar -->
+           
+             
+           
+            <!-- End Filter Bar -->
+        
+    </div>
+</div>

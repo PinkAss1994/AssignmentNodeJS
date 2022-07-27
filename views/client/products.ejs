@@ -1,3 +1,4 @@
+
 <section class="banner-area organic-breadcrumb">
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -20,7 +21,7 @@
                 <ul class="main-categories">
                     <% categories.forEach(function(cat) { %>
                         <%if (cat == currentCat) { %>
-                    <li class="main-nav-list" active><a data-toggle="collapse" href="/products/<%= cat %>/<%=" aria-expanded="false" aria-controls="fruitsVegetable"><span
+                    <li class="main-nav-list" active><a data-toggle="collapse" href="/products/<%= cat %>/" aria-expanded="false" aria-controls="fruitsVegetable"><span
                              class="lnr lnr-arrow-right"></span><%= cat %></a>
                         <!-- <ul class="collapse" id="fruitsVegetable" data-toggle="collapse" aria-expanded="false" aria-controls="fruitsVegetable">
                             <li class="main-nav-list child"><a href="#">Frozen Fish<span class="number">(13)</span></a></li>
@@ -133,36 +134,50 @@
             </div>
             <div class="sidebar-filter mt-50">
                 <div class="top-filter-head">Product Filters</div>
-                <!-- <div class="common-filter">
+                <!-- <form method="GET"> -->
+                <div class="common-filter">
                     <div class="head">Brands</div>
-                    <form action="#">
+                    <form name="yourform" id="yourform" method="GET">
                         <ul>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">Apple<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label for="asus">Asus<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label for="gionee">Gionee<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label for="micromax">Micromax<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label for="samsung">Samsung<span>(19)</span></label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Converse" name="label" value="Converse" onchange="this.form.submit()"><label for="converse">Converse</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Nike" name="label" value="Nike" onchange="this.form.submit()"><label for="nike">Nike</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Puma" name="label"  value="Puma" onchange="this.form.submit()"><label for="puma">Puma</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Adidas" name="label" value="Adidas" onchange="this.form.submit()"><label for="adidas">Adidas</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Shondo" name="label" value="Shondo" onchange="this.form.submit()"><label for="shondo">Shondo</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Ananas" name="label" value="Ananas" onchange="this.form.submit()"><label for="ananas">Ananas</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Balenciaga" name="label" value="Balenciaga" onchange="this.form.submit()"><label for="balenciaga">Balenciaga</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Mlb" name="label" value="Mlb" onchange="this.form.submit()"><label for="mlb">MLB</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Vans" name="label" value="Vans" onchange="this.form.submit()"><label for="vans">Vans</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="Reebok" name="label" value="Reebok" onchange="this.form.submit()"><label for="reebok">ReeBok</label></li>
                         </ul>
                     </form>
-                </div> -->
+                </div>
                 <div class="common-filter">
-                    <div class="head">Color</div>
-                    <form action="#">
+                    <div class="head">Size</div>
+                    <form name="yourform" id="yourform" method="GET">
                         <ul>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label for="black">Black<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label for="balckleather">Black
-                                    Leather<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label for="blackred">Black
-                                    with red<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label for="gold">Gold<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label for="spacegrey">Spacegrey<span>(19)</span></label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="37" onchange="this.form.submit()"><label>37</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="38" onchange="this.form.submit()"><label>38</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="39" onchange="this.form.submit()"><label>39</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="40" onchange="this.form.submit()"><label>40</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="41" onchange="this.form.submit()"><label>41</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="size" name="size" value="42" onchange="this.form.submit()"><label>42</label></li>
                         </ul>
                     </form>
                 </div>
                 <div class="common-filter">
                     <div class="head">Price</div>
                     <div class="price-range-area">
-                        <div id="price-range"></div>
+                        <form name="yourform" id="yourform" method="GET">
+                        <ul>
+                        <li><input type="radio" name="price" value="50" onchange="this.form.submit()">$0 — $50</li>
+                        <li><input type="radio" name="price" value="100" onchange="this.form.submit()">$50 — $100</li>
+                        <li><input type="radio" name="price" value="150" onchange="this.form.submit()">$100 — $150</li>
+                        <li><input type="radio" name="price" value="200" onchange="this.form.submit()">$150 —  $200</li>
+                        <li><input type="radio" name="price" value="1000000" onchange="this.form.submit()">>$200</li>
+                        </ul>
+                        </form>
+                        <!-- <div id="price-range"></div>
                         <div class="value-wrapper d-flex">
                             <div class="price">Price:</div>
                             <span>$</span>
@@ -170,9 +185,10 @@
                             <div class="to">to</div>
                             <span>$</span>
                             <div id="upper-value"></div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
+                <!-- </form> -->
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
@@ -195,8 +211,10 @@
                         <% }else{%>
                             <option value="" selected disabled hidden>All</option>
                             <% } %>
-                        <option value="8">Show 8</option>
-                        <option value="12">Show 12</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option>
+                        <option value="32" >32</option>
+						<option value="1000" >All</option>
                     </select>
                 </div>
                 </form>

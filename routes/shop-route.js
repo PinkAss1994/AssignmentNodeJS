@@ -10,6 +10,9 @@ router.use((req, res, next) => {
 router.get('', ShopController.getHomePage);
 router.get('/product/:id', ShopController.getProductDetails);
 router.get('/products/:productType?/:productChild?', ShopController.getProducts);
+router.post('/products/:productType*?', ShopController.postNumItems);
+router.get("/search", ShopController.getSearch);
+
 
 
 

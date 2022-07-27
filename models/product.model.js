@@ -69,30 +69,10 @@ const productSchema = new mongoose.Schema({
 
 
 });
-
+const index = {
+    name: "text",
+    labels: "text"
+  };
+  productSchema.index(index);
 const Product = mongoose.model('Product', productSchema);
-
-// const validateProduct = (product) => {
-//     const schema = {
-//         name: Joi.string().required(),
-//         size: Joi.array().items(Joi.string()).required(),
-//         color: Joi.string(),
-//         description: Joi.string(),
-//         details: Joi.string(),
-//         stock: Joi.number(),
-//         price: Joi.number(),
-//         size: Joi.array().items(Joi.string()).required(),
-//         images: Joi.array().items(Joi.string()),
-//         sale: Joi.number(),
-//         label: Joi.string(),
-//         selectCate: Joi.string()
-        
-
-
-
-//     }
-//     return Joi.validate(product, schema);
-// }
-
 module.exports.Product = Product;
-//module.exports.valid = validateProduct;

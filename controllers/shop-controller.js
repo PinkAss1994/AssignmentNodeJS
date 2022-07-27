@@ -121,13 +121,18 @@ exports.getProducts = (req, res, next) => {
     });
   });
 
-
+  let childType;
   if (productType == undefined) {
     productType = "";
   } else {
-    Category.findOne({ name: `${productType}` }, (err) => {
+    Category.findOne({ name: `${productType}` }, (err, data) => {
       if (err) console.log(err);
-     
+     if(data) {
+      childType = data.name || "";
+      //console.log(childType);
+     }else{
+      childType = "";
+     }
     });
   }
   if (productChild == undefined) {
@@ -157,14 +162,14 @@ exports.getProducts = (req, res, next) => {
     .then(products => {
       res.render("client/products", {
         title: "Products List",
-
+        
         allProducts: products,
         currentPage: page,
         currentChild: productChild,
+        categoriesChild: childType,
         categories: catName,
-        currentCat: productType,
-        
-        // categoriesChild: childType,
+        currentCat: productType, 
+        categoriesChild: childType,
         hasNextPage: ITEM_PER_PAGE * page < totalItems,
         hasPreviousPage: page > 1,
         nextPage: page + 1,
@@ -172,6 +177,58 @@ exports.getProducts = (req, res, next) => {
         lastPage: Math.ceil(totalItems / ITEM_PER_PAGE),
         ITEM_PER_PAGE: ITEM_PER_PAGE,
         sort_value: sort_value,
+        
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    
+};
+exports.postNumItems = (req, res, next) => {
+  ITEM_PER_PAGE = parseInt(req.body.numItems);
+  res.redirect("back");
+};
+
+exports.getSearch = (req, res, next) => {
+  // var cartProduct;
+  // if (!req.session.cart) {
+  //   cartProduct = null;
+  // } else {
+  //   var cart = new Cart(req.session.cart);
+  //   cartProduct = cart.generateArray();
+  // }
+  searchText =
+    req.query.searchText !== undefined ? req.query.searchText : searchText;
+  const page = +req.query.page || 1;
+
+  Product.createIndexes({}).catch(err => {
+    console.log(err);
+  });
+  Product.find({
+    $text: { $search: searchText }
+  })
+    .countDocuments()
+    .then(numProduct => {
+      totalItems = numProduct;
+      return Product.find({
+        $text: { $search: searchText }
+      })
+        .skip((page - 1) * 12)
+        .limit(12);
+    })
+    .then(products => {
+      res.render("client/search-result", {
+        title: "Search Result " + searchText,
+        
+        searchProducts: products,
+        searchT: searchText,
+        currentPage: page,
+        hasNextPage: 12 * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / 12),
         
       });
     })
