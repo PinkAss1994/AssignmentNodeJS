@@ -1,5 +1,5 @@
 const express = require('express');
-const {getDashBoard, getAllCategory, getAddCategoryView, createCate, createProduct, getAddProductView, getAllProduct, getUpdateProductView, updateProduct} = require('../controllers/admin.controller');
+const {getDashBoard, getAllCategory, getAddCategoryView, createCate, createProduct, getAddProductView, getAllProduct, getUpdateProductView, updateProduct, deleteProduct} = require('../controllers/admin.controller');
 const {upload} = require('../middleware/upload');
 
 const router = express.Router();
@@ -17,6 +17,7 @@ router.get('/admin/add-products', getAddProductView);
 router.post('/admin/add-products',upload.array('file'),createProduct); 
 router.get('/admin/update-product/:id',getUpdateProductView);
 router.post('/admin/update-product/:id', upload.array('file'), updateProduct);
+router.get('/admin/delete-product/:id', deleteProduct);
 module.exports = {
     routes: router
 }

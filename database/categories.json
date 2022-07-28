@@ -1,0 +1,82 @@
+[{
+  "_id": {
+    "$oid": "62d799bb4982d1fbd65b08f6"
+  },
+  "name": "Puma",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d799e54982d1fbd65b08f9"
+  },
+  "name": "MLB",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d799f94982d1fbd65b08fc"
+  },
+  "name": "Vans",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d799ff4982d1fbd65b08ff"
+  },
+  "name": "Gucci",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d79a084982d1fbd65b0902"
+  },
+  "name": "Converse",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d79a374982d1fbd65b0905"
+  },
+  "name": "Balenciaga",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d7bba467daa6458eefe7e2"
+  },
+  "name": "Adidas",
+  "product_id": [],
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d7bd257f18552b5441a18c"
+  },
+  "name": "Nike",
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e2357d0802de3a04e3ae5b"
+  },
+  "name": "Ananas",
+  "product_id": [],
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e235b89a6a101c33162e2d"
+  },
+  "name": "Reebok",
+  "product_id": [],
+  "status": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e235c49a6a101c33162e30"
+  },
+  "name": "Shondo",
+  "product_id": [],
+  "status": 1,
+  "__v": 0
+}]

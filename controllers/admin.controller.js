@@ -1,5 +1,18 @@
 const {Category} = require('../models/category.model');
 const{Product} = require('../models/product.model');
+
+var SORT_ITEM;
+var sort_value = "sorting";
+// var ptype;
+// var ptypesub;
+var pprice = 999999;
+var psize;
+var plabel;
+var plowerprice;
+var price;
+var searchText;
+
+
 const getDashBoard = async (req, res, next) => {
     res.render('admin/home');
 }
@@ -23,13 +36,10 @@ const getAddCategoryView = async (req, res, next) => {
 //create category
 
 const createCate = async (req, res, next) => {
-    const{error} = validate(req.body);
-    if(error) return res.status(422).send(error.details[0].message);
     const data = req.body;
     let category = await new Category({
         name: data.name,
-        status: data.status,
-        product_id: []
+        status: data.status
     });
 
     category = await category.save();
@@ -41,10 +51,30 @@ const createCate = async (req, res, next) => {
 //Get all Products
 
 const getAllProduct = async(req, res, next) => {
-    const listProduct = await Product.find().exec();
-    res.render('admin/products',{
-        product: listProduct
+  let page = req.query.page || 1;
+  let ITEM_PER_PAGE = 12;
+    Product.find()
+    .skip((page -1) * ITEM_PER_PAGE)
+    .limit(ITEM_PER_PAGE)
+    .exec((err, product) => {
+      Product.countDocuments((err, count) => {
+        totalItems = count;
+        if (err) return next(err);
+        res.render('admin/products', {
+          product,
+          currentPage: page,
+          hasNextPage: ITEM_PER_PAGE * page < count,
+          hasPreviousPage: page > 1,
+          nextPage: page + 1,
+          previousPage: page - 1,
+          lastPage: Math.ceil(count / ITEM_PER_PAGE),
+          ITEM_PER_PAGE: ITEM_PER_PAGE,
+        });
     });
+  });
+    // res.render('admin/products',{
+    //     product: listProduct
+    // });
 }
 
 //Get Add Product View
@@ -184,105 +214,20 @@ const updateProduct = async (req, res, next) => {
       console.log(error);
       res.status(500).send("Hubo un Error");
     }
-    // const lstCategory = await Category.find(
-    //     {
-    //       status: 1
-    //     }
-    //   ).lean();
-    
-    //   const docProduct = await Product.findOne(
-    //     {
-    //       id: req.params.id
-    //     }
-    //   ).lean();
-    
-    //   if (!docProduct || !docProduct.id) {
-    //     return res.render('admin/updateProduct', {
-    //       errors: [
-    //         {
-    //           msg: 'Ivalid Id'
-    //         }
-    //       ],
-    //       category: lstCategory
-    //     });
-    //   }
-    
-    //   const errors = req.validationErrors();
-    
-    //   if (errors) {
-    //     return res.render('admin/updateProduct', {
-    //       errors,
-    //       category: lstCategory,
-    //       product: docProduct
-    //     });
-    //   }
-
-    //   const updateData = {
-    //     name: req.body.name,
-    //     category_id: req.body.categoryId,
-    //     description: req.body.description,
-    //     price: req.body.price,
-    //     sale: req.body.sale,
-    //     size: req.body.size,
-    //     details:req.body.details,
-    //     stock: req.body.stock,
-    //     label: req.body.label,
-    //     color: req.body.color,
-    //     images: []
-    //   };
-    
-    //   if (!req.file || !req.file.filename) {
-    //     updateData.images = docProduct.images;
-    //   }
-    //   else {
-    //     updateData.images = req.file.filename;
-    //   } 
-      
-    //   await Product.update(
-    //     {
-    //       id: docProduct.id
-    //     },
-    //     updateData
-    //   );
-    //   res.redirect('/admin/list-products');
-// const id = req.params.id;
-// const data = req.body;
-// const lstCategory = await Category.find(
-//         {
-//           status: 1
-//        }
-//      ).lean();
-//      category = lstCategory;
-// var product = Product.findOneAndUpdate(id,{
-// name:data.name,
-// category_id: data.selectCate,
-// description:data.description,
-// details:data.details,
-// stock:data.stock,
-// price:data.price,
-// size: data.size,
-// color: data.color,
-// label: data.label,
-// sale: data.sale,
-// ...(typeof(req.file)!=="undefined" && {
-//     images: {
-//       url: req.file.path,
-//       filename: req.file.filename,
-//     }
-//   }),
-// }, {new:true});
-
-// if(!req.file || !req.file.filename){
-//     data.images = product.images;
-// }
-// else{
-//     data.images = req.file.filename;
-// }
-// if(!product) return res.status(404).send('product with the given id not found');
-// res.redirect('/admin/list-products');
-// console.log(product);
+   
 
 }
+const deleteProduct =async (req, res, next) => {
+  try{
+    const id = req.params.id;
+    const product = await Product.findByIdAndRemove(id);
+    if(!product) return res.status(404).send('product with given id not found!');
+  res.redirect('/admin/list-products');
+  }catch(error){
+    res.status(404).send(error.message);
+  }
+}
+
 module.exports = {
     getDashBoard,
     getAllCategory,
@@ -292,5 +237,6 @@ module.exports = {
     getAddProductView,
     getAllProduct,
     getUpdateProductView,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
